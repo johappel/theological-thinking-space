@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Theological Thinking Space – Prototype 02</title>
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <main class="app-shell">
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">THEOLOGICAL THINKING SPACE</p>
+        <h1>Denkraum vor Entwurf</h1>
+      </div>
+      <div class="mode-pill" id="modePill">DENKRAUM</div>
+    </header>
+
+    <section class="intro" id="introPanel">
+      <h2>Was bringt ihr mit?</h2>
+      <p>Beginne mit einem Thema, Text, Anlass oder einer Situation. Noch entsteht kein Gottesdienstablauf.</p>
+      <textarea id="startingPoint" rows="4" placeholder="Zum Beispiel: Mich beschäftigt an Lukas 15, dass der ältere Sohn am Ende draußen bleibt …"></textarea>
+      <button id="startBtn">Denkraum öffnen</button>
+    </section>
+
+    <section class="workspace hidden" id="workspace">
+      <div class="conversation-panel">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">DENKTISCH</p>
+            <h2>Gemeinsames Denken</h2>
+          </div>
+        </div>
+
+        <div id="stream" class="stream"></div>
+
+        <div class="perspective-bar" id="perspectiveBar">
+          <button data-perspective="bible">Bibel / Theologie</button>
+          <button data-perspective="liturgy">Liturgie / Praxis</button>
+          <button data-perspective="outside">Außenblick</button>
+        </div>
+
+        <div class="composer">
+          <textarea id="messageInput" rows="3" placeholder="Was bewegt euch gerade?"></textarea>
+          <div class="composer-actions">
+            <button class="secondary" id="addHumanBtn">Gedanken einbringen</button>
+          </div>
+        </div>
+      </div>
+
+      <aside class="state-panel">
+        <p class="eyebrow">DENKSTAND</p>
+        <h2>Was trägt bisher?</h2>
+        <div id="stateLists"></div>
+        <button id="thresholdBtn" class="threshold-btn">Zur Schwelle →</button>
+      </aside>
+    </section>
+
+    <section class="threshold hidden" id="thresholdPanel">
+      <p class="eyebrow">SCHWELLE</p>
+      <h2>Vom Erleben zur Öffnung</h2>
+      <p class="lead">Jetzt geht es noch nicht um Ablaufplanung, sondern um die Übersetzung des eigenen Denkwegs in einen offenen Gottesdienstraum.</p>
+      <div class="threshold-grid">
+        <label>Was hat sich bei uns im Denken verändert?
+          <textarea id="changed" rows="4"></textarea>
+        </label>
+        <label>Was davon können wir als eigenes Zeugnis verantworten?
+          <textarea id="testimony" rows="4"></textarea>
+        </label>
+        <label>Was dürfen wir für andere nicht vorwegnehmen?
+          <textarea id="notPrescribe" rows="4"></textarea>
+        </label>
+        <label>Welche Bedingungen könnten wir stattdessen eröffnen?
+          <textarea id="openConditions" rows="4"></textarea>
+        </label>
+      </div>
+      <div class="threshold-actions">
+        <button class="secondary" id="backBtn">← Zurück in den Denkraum</button>
+        <button id="saveThresholdBtn">Schwellenstand festhalten</button>
+      </div>
+      <pre id="snapshot" class="snapshot hidden"></pre>
+    </section>
+  </main>
+  <script src="./app.js"></script>
+</body>
+</html>
