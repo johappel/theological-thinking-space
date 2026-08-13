@@ -141,6 +141,7 @@ async function callThink(role, currentInput=""){
 }
 
 $("startBtn").addEventListener("click", async ()=>{
+  if (busy) return;
   const text = $("startInput").value.trim();
   if (!text) return;
   state.startingPoint = text;

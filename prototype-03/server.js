@@ -24,6 +24,9 @@ loadEnvFile();
 
 const PORT = Number(process.env.PORT || 8787);
 const DEEPSEEK_API_KEY = process.env.DEEPSEEK_API_KEY;
+const MODEL = process.env.MODEL || "deepseek-v4-flash";
+const BASE_URL = (process.env.BASE_URL || "https://api.deepseek.com").replace(/\/+$/, "");
+const CHAT_COMPLETIONS_URL = `${BASE_URL}/chat/completions`;
 
 const ROLE_PROMPTS = {
   companion: `
@@ -143,6 +146,10 @@ function cleanEvents(events) {
   }));
 }
 
+function wait(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
 async function handleThink(req, res) {
   if (!DEEPSEEK_API_KEY) {
     return sendJson(res, 500, { error: "DEEPSEEK_API_KEY fehlt. Lege eine .env-Datei an." });
@@ -170,22 +177,44 @@ async function handleThink(req, res) {
     }
   ];
 
-  const upstream = await fetch("https://api.deepseek.com/chat/completions", {
+  const request = {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
       "Authorization": `Bearer ${DEEPSEEK_API_KEY}`
     },
     body: JSON.stringify({
-      model: "deepseek-v4-flash",
+      model: MODEL,
       messages,
       thinking: { type: "enabled" },
       reasoning_effort: "high",
       response_format: { type: "json_object" },
-      max_tokens: 900,
+      // Bei aktiviertem Thinking zählen interne Überlegungen zum Token-Budget.
+      max_tokens: 4000,
       stream: false
     })
-  });
+  };
+
+  let upstream;
+  let lastError;
+  for (let attempt = 1; attempt <= 3; attempt += 1) {
+    try {
+      upstream = await fetch(CHAT_COMPLETIONS_URL, request);
+      break;
+    } catch (err) {
+      lastError = err;
+      const code = err?.cause?.code || err?.code || "UNKNOWN";
+      console.error(`DeepSeek connection failed (${code}), attempt ${attempt}/3`);
+      if (attempt < 3) await wait(attempt * 1000);
+    }
+  }
+  if (!upstream) {
+    const code = lastError?.cause?.code || lastError?.code || "UNKNOWN";
+    return sendJson(res, 502, {
+      error: "DeepSeek ist momentan nicht erreichbar.",
+      detail: `Verbindung zu api.deepseek.com fehlgeschlagen (${code}) nach drei Versuchen. Prüfe Internetzugang, DNS, Firewall oder Proxy.`
+    });
+  }
 
   const raw = await upstream.text();
   if (!upstream.ok) {
@@ -202,9 +231,17 @@ async function handleThink(req, res) {
     return sendJson(res, 502, { error: "Ungültige Antwort der DeepSeek API." });
   }
 
-  const content = api?.choices?.[0]?.message?.content;
+  const choice = api?.choices?.[0];
+  const content = typeof choice?.message?.content === "string"
+    ? choice.message.content.trim()
+    : "";
   if (!content) {
-    return sendJson(res, 502, { error: "DeepSeek lieferte keinen sichtbaren Inhalt." });
+    const finishReason = choice?.finish_reason || "unbekannt";
+    const tokenUsage = api?.usage?.total_tokens;
+    return sendJson(res, 502, {
+      error: "DeepSeek lieferte keinen sichtbaren Inhalt.",
+      detail: `Die API hat keine sichtbare Antwort erzeugt (finish_reason: ${finishReason}${tokenUsage ? `, total_tokens: ${tokenUsage}` : ""}). Bitte erneut versuchen.`
+    });
   }
 
   let parsed;
@@ -220,7 +257,7 @@ async function handleThink(req, res) {
   // reasoning_content wird absichtlich weder gespeichert noch an den Browser weitergegeben.
   sendJson(res, 200, {
     role,
-    model: "deepseek-v4-flash",
+    model: MODEL,
     result: parsed,
     usage: api.usage || null
   });
@@ -264,7 +301,7 @@ const server = http.createServer(async (req, res) => {
     if (req.method === "GET" && req.url === "/api/health") {
       return sendJson(res, 200, {
         ok: true,
-        model: "deepseek-v4-flash",
+        model: MODEL,
         apiKeyConfigured: Boolean(DEEPSEEK_API_KEY)
       });
     }
@@ -278,7 +315,11 @@ const server = http.createServer(async (req, res) => {
   }
 });
 
-server.listen(PORT, () => {
-  console.log(`Theological Thinking Space Prototype 03: http://localhost:${PORT}`);
-  console.log(`DeepSeek key configured: ${Boolean(DEEPSEEK_API_KEY)}`);
-});
+if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+  server.listen(PORT, () => {
+    console.log(`Theological Thinking Space Prototype 03: http://localhost:${PORT}`);
+    console.log(`DeepSeek key configured: ${Boolean(DEEPSEEK_API_KEY)}`);
+  });
+}
+
+export { server, cleanEvents };

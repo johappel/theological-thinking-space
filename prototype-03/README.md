@@ -22,11 +22,23 @@ Der Prototyp besitzt:
 - eine bewusste **Schwelle** zwischen Denkraum und späterer Gottesdienstgestaltung,
 - lokale Session-Persistenz im Browser.
 
-## Modell
+## Modell und Provider
 
-Standardmäßig:
+Der Provider und das Modell werden in `.env` konfiguriert. Die API muss das
+OpenAI-kompatible `POST /chat/completions`-Format anbieten. Beispiel für
+OpenRouter:
+
+```env
+DEEPSEEK_API_KEY=sk-123...
+PORT=8787
+MODEL=deepseek/deepseek-v4-flash-0731
+BASE_URL=https://openrouter.ai/api/v1
+```
+
+Standardwerte ohne `.env` sind:
 
 - `deepseek-v4-flash`
+- `https://api.deepseek.com`
 - Thinking: `enabled`
 - Reasoning effort: `high`
 - maximale Ausgabe pro Call: `900` Tokens
@@ -37,7 +49,7 @@ Das `reasoning_content` des Modells wird absichtlich weder in der UI angezeigt n
 ## Voraussetzungen
 
 - Node.js 20 oder neuer
-- DeepSeek API Key
+- API-Key des gewählten Providers
 
 Es sind **keine npm-Abhängigkeiten** erforderlich.
 
@@ -50,6 +62,8 @@ Es sind **keine npm-Abhängigkeiten** erforderlich.
 ```env
 DEEPSEEK_API_KEY=dein_key
 PORT=8787
+MODEL=deepseek/deepseek-v4-flash-0731
+BASE_URL=https://openrouter.ai/api/v1
 ```
 
 4. Im Projektordner starten:
@@ -81,7 +95,7 @@ Node server.js
   |
   | serverseitiger API-Key
   v
-DeepSeek V4 Flash
+konfigurierter Provider und Modell
 ```
 
 Der Browser erhält niemals den DeepSeek API-Key.
