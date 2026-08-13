@@ -1,8 +1,8 @@
-# Architekturhypothese: gemeinsamer theologischer Denkraum
+# Architekturhypothese: gemeinsamer und mitwachsender theologischer Denkraum
 
-Diese Datei beschreibt noch keine endgültige technische Architektur. Sie formuliert die kleinste Struktur, mit der mehrere KI-Perspektiven tatsächlich **gemeinsam** an einem Gegenstand arbeiten können, ohne lediglich unabhängige Reviews hintereinander zu produzieren.
+Diese Datei beschreibt noch keine endgültige technische Architektur. Sie formuliert die kleinste Struktur, mit der mehrere KI-Perspektiven gemeinsam an einem Gegenstand arbeiten können und der Denkraum zugleich über viele Projekte hinweg lernen kann, ohne persönliche Erfahrung, wissenschaftliches Wissen und geteilte Praxismuster zu vermischen.
 
-## 1. Kernmodell
+## 1. Kernmodell des aktuellen Denkraums
 
 ```text
                          ┌─────────────────────┐
@@ -33,15 +33,14 @@ Jede Perspektive erhält selektiv:
 1. den aktuellen gemeinsamen Gegenstand,
 2. einen kleinen strukturierten Denkstand,
 3. relevante Ereignisse aus dem Gespräch,
-4. ihre eigene Rollenbeschreibung und ggf. private Perspektivnotizen.
+4. ihre eigene Rollenbeschreibung und ggf. private Perspektivnotizen,
+5. gezielt ausgewähltes Langzeitwissen aus der Knowledge Ecology.
 
-Sie erhält **nicht automatisch den kompletten Chat und alle privaten Überlegungen anderer Agenten**.
+Sie erhält **nicht automatisch den kompletten Chat, alle privaten Überlegungen anderer Agenten oder den gesamten Langzeitbestand**.
 
 ## 2. Shared Artifact
 
 Der gemeinsame Gegenstand ist das, worüber gedacht wird. Beim ersten Prototyp kann das ein sehr einfaches Markdown-/JSON-Objekt sein.
-
-Beispiel:
 
 ```yaml
 artifact:
@@ -59,7 +58,7 @@ artifact:
     - christliche Hoffnung, ohne Erfahrung zu überreden
 ```
 
-Wichtig: Der Artifact State ist **kein Chatprotokoll**, sondern der aktuell bearbeitbare Gegenstand.
+Der Artifact State ist **kein Chatprotokoll**, sondern der aktuell bearbeitbare Gegenstand.
 
 ## 3. Shared Structured Memory
 
@@ -78,11 +77,11 @@ shared_state:
   sources: []
 ```
 
-Der Mensch sollte im Zweifel sehen und beeinflussen können, was hier aufgenommen wird.
+Der Mensch sollte sehen und beeinflussen können, was hier aufgenommen wird.
 
 ## 4. Conversational Event Stream
 
-Der Event Stream macht gemeinsame Arbeit möglich. Er enthält Ereignisse wie:
+Der Event Stream macht gemeinsame Arbeit möglich.
 
 ```json
 {"type":"human_message","id":"e17","text":"Mir ist das zu stark auf Trost ausgerichtet."}
@@ -95,7 +94,7 @@ Damit kann eine Perspektive auf einen Beitrag einer anderen reagieren. Der Konte
 
 ## 5. Private Perspective Memory
 
-Eine Perspektive darf eine eigene Kontinuität besitzen, beispielsweise:
+Eine Perspektive darf eine eigene Kontinuität besitzen.
 
 ```yaml
 private_memory:
@@ -111,23 +110,24 @@ Diese Notizen werden nicht automatisch Teil des gemeinsamen Wahrheitsbestands.
 
 ## 6. Kontext-Selektion
 
-Eine spätere Implementierung braucht deshalb keinen vollständig geteilten Agenten-Chat. Für jeden Agenten kann ein Context Builder etwa zusammenstellen:
+Ein Context Builder stellt pro Agent gezielt zusammen:
 
 ```text
 SYSTEM ROLE
 + CURRENT ARTIFACT
 + SHARED STATE
 + latest human event
-+ events explicitly addressed to this perspective
-+ a small number of semantically relevant recent events
++ explicitly addressed events
++ semantically relevant recent events
++ selected theological research knowledge
++ selected practice patterns
++ permitted local experience memory
 + private perspective memory
 ```
 
-Das ist wesentlich einfacher als ein System, in dem alle Agenten jederzeit alles gegenseitig lesen und darauf reagieren.
+Der Context Builder ist zugleich eine Schutzgrenze: Nicht alles, was im System gespeichert ist, darf automatisch in jeden Agentenkontext gelangen.
 
 ## 7. Turn-Modell für den ersten Prototyp
-
-Der MVP sollte zunächst **kein autonomes Agenten-Kollektiv** sein. Ein kontrollierter Turn reicht:
 
 1. Mensch äußert einen Gedanken oder verändert den Gegenstand.
 2. Companion entscheidet, welche 1–3 Perspektiven dafür relevant sind.
@@ -136,11 +136,11 @@ Der MVP sollte zunächst **kein autonomes Agenten-Kollektiv** sein. Ein kontroll
 5. Eine Perspektive darf auf einen konkreten Beitrag einer anderen reagieren.
 6. Mensch oder Companion entscheidet, was in den Shared State übernommen wird.
 
-Später kann dieser Ablauf dynamischer werden.
+Der MVP bleibt bewusst kontrolliert und wird nicht als autonomes Agentenkollektiv gebaut.
 
-## 8. Perspective Refresh als eigener Vorgang
+## 8. Perspective Refresh
 
-Der Research-/Knowledge-Teil soll nicht permanent alles recherchieren. Ein gezieltes Ereignis löst einen Refresh aus:
+Ein gezieltes Ereignis kann eine Fremdperspektive anfordern:
 
 ```json
 {
@@ -156,8 +156,182 @@ Der Research-/Knowledge-Teil soll nicht permanent alles recherchieren. Ein gezie
 
 Das Ergebnis sind wenige Perspektivkarten mit Provenienz, Beobachtung und Irritationsfrage – keine Materialhalde.
 
-## 9. Architekturregel
+## 9. Langzeitarchitektur: Knowledge Ecology
+
+Über dem einzelnen Denkraum liegt eine langfristige Wissensökologie:
+
+```text
+                 LONG-TERM KNOWLEDGE ECOLOGY
+
+ ┌──────────────────────┐   ┌──────────────────────┐
+ │ Theological Research │   │ Perspective Memory   │
+ │ Knowledge            │   │                      │
+ └──────────┬───────────┘   └──────────┬───────────┘
+            │                          │
+            ├──────────────┬───────────┤
+            │              │           │
+            ▼              ▼           ▼
+      Context Selection for current Thinking Space
+            ▲              ▲
+            │              │
+ ┌──────────┴───────────┐  │  ┌────────────────────┐
+ │ Local Experience     │  │  │ Practice Pattern   │
+ │ Memory               │  │  │ Commons            │
+ └──────────────────────┘  │  └────────────────────┘
+                           │
+                    shared with others
+```
+
+Vier Wissensarten werden dauerhaft unterschieden:
+
+- **Theological Research Knowledge** – wissenschaftlich und quellengebunden.
+- **Local Experience Memory** – persönlich, teambezogen oder lokal; geschützt.
+- **Practice Pattern Commons** – generalisierte, geprüfte und freigegebene Praxiserfahrungen.
+- **Perspective Memory** – Fragen, Watchpoints, Irritationen und Selbstkorrekturen der Perspektiven.
+
+## 10. Forschungsschleife
+
+```text
+current project
+   ↓
+what do we already know?
+   ↓
+knowledge gaps
+   ↓
+Research Worker
+   ↓
+source work / research
+   ↓
+Knowledge Candidates
+   ↓
+provenance + quality + freshness review
+   ↓
+Theological Research Knowledge
+```
+
+Der Research Worker erweitert den Bestand inkrementell. Vorhandenes Wissen wird wiederverwendet, aber auf Aktualität und Geltungsbereich geprüft.
+
+## 11. Erfahrungsschleife
+
+```text
+planning / practice / team process
+   ↓
+reflection
+   ↓
+Experience Reflection Worker
+   ↓
+local learning candidates
+   ↓
+Local Experience Memory
+   ↓
+later confirmation / contradiction / revision
+```
+
+Erfahrungswissen bleibt zunächst lokal. Der Denkraum kann daraus für dieselbe Person oder dasselbe Team lernen, ohne dass diese Erfahrung geteilt werden muss.
+
+## 12. Lernen zwischen Denkräumen
+
+Andere Thinking Spaces dürfen nicht auf fremde Local Experience Memories zugreifen. Austausch erfolgt über kontrollierte Wissensartefakte:
+
+```text
+Thinking Space A                      Thinking Space B
+local protected memory                local protected memory
+        │                                    │
+        └──────── Generalization Gate ───────┘
+                         │
+                         ▼
+                  SHARED COMMONS
+             ┌──────────────────────┐
+             │ research knowledge   │
+             │ practice patterns    │
+             │ perspective cards    │
+             │ methods / sources    │
+             └──────────────────────┘
+```
+
+**Lernen von anderen bedeutet Austausch geprüfter Wissensartefakte, nicht Zugriff auf fremde Erinnerungen.**
+
+## 13. Sichtbarkeit und Schutzraum
+
+Für lokale Erinnerungen und Wissen gelten gestufte Sichtbarkeiten:
+
+```text
+private → team → organization/community → shared commons
+```
+
+Eine höhere Sichtbarkeit muss bewusst hergestellt werden. Es gibt keinen automatischen Pfad vom Gespräch zum Shared Commons.
+
+Der Schutzraum ist auch systemisch: Der Denkraum soll Spannungen und unterschiedliche Positionen eines Teams erinnern können, ohne daraus dauerhafte Bewertungen einzelner Personen zu erzeugen.
+
+## 14. Capture Gate und Sharing Gate
+
+Zwei getrennte Übergänge sind notwendig.
+
+### Capture Gate
+
+Entscheidet, ob etwas aus dem aktuellen Gespräch überhaupt dauerhaftes lokales Erfahrungswissen werden soll.
+
+```text
+Conversation → candidate → purpose/protection review → Local Experience Memory
+```
+
+### Sharing Gate
+
+Entscheidet, ob aus lokalem Erfahrungswissen ein generalisiertes, teilbares Praxismuster werden kann.
+
+```text
+Local Experience Memory
+   ↓
+Generalization
+   ↓
+Context / privacy / epistemic review
+   ↓
+Explicit approval
+   ↓
+Practice Pattern Commons
+```
+
+Generalisierung ist mehr als das Entfernen von Namen. Kontext, Unsicherheit und epistemischer Status müssen erhalten bleiben.
+
+## 15. Epistemische Trennung
+
+Wissenschaftliches Wissen und Praxiserfahrung dürfen sich gegenseitig korrigieren, aber nicht vermischt werden.
+
+Der Denkraum soll beispielsweise gleichzeitig sagen können:
+
+> „Die Forschung weist auf eine mögliche Hürde hin.“
+
+und:
+
+> „In unseren bisherigen lokalen Erfahrungen zeigte sich das teilweise anders.“
+
+Die daraus entstehende Spannung ist eine Denkaufgabe und kein Fehler, der durch einen künstlichen Konsens beseitigt werden muss.
+
+## 16. Selbstkorrektur des lernenden Systems
+
+Langzeitwissen erzeugt eigene Defaults. Deshalb müssen Learnings revidierbar bleiben:
+
+```yaml
+learning:
+  statement: ...
+  evidence_for: 7
+  evidence_against: 2
+  confidence: medium
+  status: provisional
+  scope: ...
+  last_confirmed: ...
+```
+
+Der Reviewer soll mit der Zeit nicht nur Modell-Bias, sondern auch **Bias des eigenen Thinking Space** erkennen:
+
+> Welche Denkgewohnheiten haben wir selbst entwickelt?
+
+## 17. Architekturregeln
 
 > Konsens ist ein mögliches Ergebnis des Denkens, aber kein Infrastrukturzustand.
 
-Deshalb werden Artifact, Shared State, Event Stream und private Perspektivkontexte getrennt gehalten.
+> Lernen bedeutet nicht, alles zu speichern, sondern Wissen nach Herkunft, Geltungsbereich, Schutzbedarf und Revidierbarkeit zu unterscheiden.
+
+> Lernen von anderen bedeutet Austausch geprüfter Wissensartefakte – nicht Öffnung fremder Schutzräume.
+
+> Der Denkraum soll sich erinnern können, ohne Menschen festzuschreiben.
