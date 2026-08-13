@@ -1,0 +1,47 @@
+*{box-sizing:border-box}
+body{margin:0;font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:#f3f1ec;color:#23211f}
+.app-shell{max-width:1180px;margin:0 auto;padding:28px}
+.topbar{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:22px}
+.eyebrow{font-size:.72rem;letter-spacing:.13em;font-weight:700;color:#6c675f;margin:0 0 6px}
+.topbar h1,.section-head h2,.state-panel h2,.threshold h2,.intro h2{margin:.1rem 0}
+.mode-pill{border:1px solid #aaa398;border-radius:999px;padding:8px 12px;font-size:.75rem;letter-spacing:.08em;background:#fff}
+.intro,.threshold,.conversation-panel,.state-panel{background:#fff;border:1px solid #d9d4cb;border-radius:18px;box-shadow:0 8px 24px rgba(32,28,24,.05)}
+.intro{padding:28px;max-width:780px}
+.intro p,.lead{color:#5f5a53;line-height:1.6}
+.workspace{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(280px,.8fr);gap:18px}
+.conversation-panel,.state-panel{padding:22px}
+.stream{display:flex;flex-direction:column;gap:12px;min-height:340px;padding:8px 0 18px}
+.entry{border:1px solid #e2ded7;border-radius:14px;padding:14px 16px;background:#fbfaf8}
+.entry.human{background:#f1efe9}
+.entry .meta{font-size:.75rem;font-weight:700;letter-spacing:.04em;color:#6f6961;margin-bottom:6px}
+.entry p{margin:0;line-height:1.55}
+.entry-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.entry-actions button{font-size:.75rem;padding:7px 9px;background:#fff;border:1px solid #cbc5bb;color:#4e4943}
+.perspective-bar{display:flex;gap:8px;flex-wrap:wrap;border-top:1px solid #ece8e1;padding-top:16px}
+.perspective-bar button{background:#ece8df;color:#302d29}
+.composer{margin-top:14px}
+.composer-actions{display:flex;justify-content:flex-end;margin-top:8px}
+textarea{width:100%;resize:vertical;border:1px solid #cfc8bd;border-radius:12px;padding:12px 13px;font:inherit;background:#fff;color:#25221f}
+textarea:focus{outline:2px solid #a9a094;outline-offset:1px}
+button{border:0;border-radius:10px;padding:10px 14px;font:inherit;font-weight:650;background:#2f4f45;color:#fff;cursor:pointer}
+button:hover{filter:brightness(.97)}
+button.secondary{background:#ebe7df;color:#37332f}
+.state-group{border-top:1px solid #ece8e1;padding:14px 0}
+.state-group h3{font-size:.86rem;margin:0 0 8px}
+.state-group ul{margin:0;padding-left:18px;color:#5b564f}
+.state-group li{margin:4px 0;line-height:1.4}
+.state-empty{color:#9a9389;font-style:italic}
+.threshold-btn{width:100%;margin-top:12px;background:#694f3a}
+.threshold{padding:28px}
+.threshold-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:20px}
+.threshold-grid label{display:flex;flex-direction:column;gap:8px;font-weight:650;line-height:1.4}
+.threshold-actions{display:flex;justify-content:space-between;gap:12px;margin-top:20px}
+.snapshot{white-space:pre-wrap;background:#282725;color:#f3f1ed;border-radius:14px;padding:18px;margin-top:18px;overflow:auto}
+.hidden{display:none!important}
+@media(max-width:780px){
+  .app-shell{padding:16px}
+  .workspace,.threshold-grid{grid-template-columns:1fr}
+  .topbar{gap:16px}
+  .threshold-actions{flex-direction:column-reverse}
+  .perspective-bar button{flex:1 1 100%}
+}
