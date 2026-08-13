@@ -42,12 +42,21 @@ Der bestehende Ansatz einer Wissensökologie bleibt erhalten. Der Thinking Space
 
 ## Repository-Struktur
 
-- `docs/denkstand.md` – konzeptioneller Stand
-- `docs/architecture.md` – Architekturhypothese
+**Aktuelle konzeptionelle Referenzen:**
+
+- `docs/focus-v2.md` – neu fokussierter Denkstand
+- `docs/architecture.md` – Architektur von Denkprozess, Schwelle und Wissensökologie
 - `docs/threshold-to-worship.md` – Schwelle vom Denkraum zum Gottesdienstraum
+- `docs/prototype-02.md` – aktueller Thin Slice
 - `docs/knowledge-ecology.md` – Langzeitlernen und Lernen zwischen Denkräumen
 - `docs/pastoral-safe-space.md` – Schutzraum und Freigabe
-- `docs/prototype-01.md` – erster Thin Slice
+
+**Historischer Ausgangsstand:**
+
+- `docs/denkstand.md` – frühere Fokussierung auf Gottesdienstinnovation und Multi-Agent-Entwurf
+- `docs/prototype-01.md` – erster Prototype vor der Neufokussierung
+
+Die historischen Dateien bleiben bewusst erhalten, damit die konzeptionelle Entwicklung nachvollziehbar bleibt.
 
 ## Status
 
