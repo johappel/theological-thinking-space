@@ -8,6 +8,10 @@ Sprachmodelle bringen bei „Gottesdienst“, „Liturgie“ und religiöser Spr
 
 Der Theological Thinking Space soll diese Muster nicht nur durch bessere Prompts vermeiden. Das Problem wird als **epistemisches Architekturproblem** verstanden: Welche Perspektiven gelangen wann in den Denkraum? Wer sieht welchen Kontext? Wie werden Widerspruch, Fremdheit, Tradition und Quellenherkunft sichtbar?
 
+Inzwischen kommt eine zweite Grundfrage hinzu:
+
+> Wie kann der Denkraum über viele Projekte hinweg lernen und von anderen Denkräumen profitieren, ohne persönliche Erfahrung, wissenschaftliches Wissen und lokale Schutzräume miteinander zu vermischen?
+
 ## 2. Kontext
 
 Der gegenwärtige Schwerpunkt liegt auf einem deutschsprachigen evangelischen Kontext. Agenda 1 ist dabei weder Feindbild noch Default, sondern eine Referenz unter anderen. Interreligiöse Perspektiven sollen nicht dekorativ eingestreut werden, sondern als echte Gegenperspektiven wirken können.
@@ -47,6 +51,14 @@ Eine eingebrachte Perspektive soll unterscheidbar bleiben, z. B. nach:
 - Erscheinungsjahr,
 - Beobachtung / Forschung / normative Position.
 
+### Lernen ohne Vermischung
+
+Wissenschaftliches Wissen, lokale Erfahrung und generalisierte Praxismuster dürfen sich gegenseitig befragen und korrigieren, behalten aber ihren jeweils eigenen epistemischen Status.
+
+### Schutzraum vor Verwertung
+
+Persönliche, pastorale und teamspezifische Kommunikation ist nicht automatisch Lernmaterial. Der Denkraum darf lernen, ohne jede Äußerung zu speichern oder in einen geteilten Wissensbestand zu überführen.
+
 ## 4. Perspektivlinsen
 
 Mögliche spezialisierte Perspektiven sind:
@@ -69,11 +81,15 @@ Ein eigener Reviewer soll nicht nur Safety prüfen, sondern strukturelle Default
 - Gemeinde als Publikum,
 - behauptete Innovation bei unveränderter Rollenverteilung.
 
-Der Reviewer soll solche Muster benennen und zurückfragen, ob sie beabsichtigt sind.
+Mit wachsendem Langzeitwissen kommt eine weitere Aufgabe hinzu:
+
+> Welche Denkgewohnheiten und neuen Defaults hat der Thinking Space selbst entwickelt?
+
+Der Reviewer soll damit auch die eigene Systemgeschichte irritieren können.
 
 ## 6. Multi-Agent-Denkraum
 
-Die bisherige Orientierung lautet:
+Die Orientierung lautet:
 
 > **shared artifact + shared structured memory + conversational event stream**
 >
@@ -86,22 +102,169 @@ Die Agenten sollen also nicht unabhängig nacheinander denselben Entwurf reviewe
 Vorläufige Rollen:
 
 - **Companion** – denkt mit dem Menschen und hält die Frage offen.
-- **Knowledge** – erschließt Traditionen, Diskurse und Quellen mit Provenienz.
-- **Worker / Scout** – sucht gezielt Fremdperspektiven und Irritationen.
+- **Knowledge / Research Worker** – erschließt Traditionen, Diskurse, Quellen und aktuelle kirchliche Grundlagen mit Provenienz.
+- **Scout** – sucht gezielt Fremdperspektiven und Irritationen.
 - **Perspective Agents** – betrachten den Gegenstand durch klar definierte Linsen.
 - **Reviewer** – entdeckt Verengungen, versteckte Defaults und Scheininnovation.
+- **Experience Reflection Worker** – gewinnt lokale, revidierbare Lernerfahrungen aus Praxis und Reflexion.
+- **Generalization / Sharing Worker** – prüft, ob aus lokalem Erfahrungswissen ein verantwortbar teilbares Praxismuster werden kann.
 
-## 7. Noch offene Fragen
+## 7. Ein selbstlernender Denkraum
+
+Selbstlernend bedeutet hier **nicht**, dass sich das zugrunde liegende Sprachmodell autonom nachtrainiert.
+
+Der Denkraum lernt durch eine transparente Wissensökologie mit vier getrennten Bereichen:
+
+### Theological Research Knowledge
+
+Wissenschaftlich erschlossenes, quellengebundenes Wissen aus:
+
+- Exegese und biblischer Textarbeit,
+- systematischer Theologie,
+- Praktischer Theologie,
+- Liturgiewissenschaft,
+- Ritual Studies,
+- empirischer Religionsforschung,
+- interreligiösen Diskursen,
+- kirchlichen Agenden, Ordnungen und Handreichungen,
+- relevanten außertheologischen Disziplinen.
+
+Dieses Wissen soll durch Research Worker mit jedem Projekt wachsen und kann grundsätzlich zwischen Denkräumen geteilt werden.
+
+### Local Experience Memory
+
+Persönliches, teambezogenes und lokales Erfahrungswissen aus realen Denk- und Praxisprozessen.
+
+Dieses Wissen bleibt standardmäßig im jeweiligen Schutzraum.
+
+### Practice Pattern Commons
+
+Nur stark generalisierte, kontextualisierte, geprüfte und ausdrücklich freigegebene Erfahrungsgewinne dürfen als Praxismuster zwischen Denkräumen geteilt werden.
+
+### Perspective Memory
+
+Perspektiven können eigene Watchpoints, produktive Fragen und Selbstkorrekturen entwickeln. Auch sie können damit über viele Projekte hinweg reflexiver werden.
+
+## 8. Zwei Lernschleifen
+
+### Forschung
+
+```text
+Projektfrage
+  ↓
+vorhandenes Wissen prüfen
+  ↓
+Wissenslücken identifizieren
+  ↓
+Research Worker
+  ↓
+Quellen erschließen und prüfen
+  ↓
+Theological Research Knowledge erweitern
+```
+
+Der Worker soll nicht bei jedem Projekt alles neu recherchieren, sondern vorhandenes Wissen auf Relevanz, Aktualität und Geltungsbereich prüfen und gezielt erweitern.
+
+### Erfahrung
+
+```text
+Planung / Praxis / Teamprozess
+  ↓
+Reflexion und Beobachtung
+  ↓
+Experience Reflection Worker
+  ↓
+Local Experience Memory
+  ↓
+spätere Bestätigung / Widerspruch / Revision
+```
+
+Das lokale Gedächtnis kann sehr spezifisch sein, ohne deshalb teilbar sein zu müssen.
+
+## 9. Lernen zwischen Denkräumen
+
+Verschiedene Theological Thinking Spaces sollen voneinander lernen können.
+
+Dabei gilt:
+
+> **Geteilt werden Wissensartefakte, nicht Erinnerungsbestände.**
+
+Teilbar sind insbesondere:
+
+- wissenschaftlich erschlossene Knowledge Items mit Provenienz,
+- kuratierte Quellen und Forschungsstände,
+- Perspektivkarten und Methoden,
+- generalisierte und freigegebene Praxismuster.
+
+Nicht automatisch teilbar sind:
+
+- Gesprächsverläufe,
+- persönliche Erinnerungen,
+- teamspezifische Dynamiken,
+- lokale Konflikte,
+- identifizierbare Einzelerfahrungen.
+
+Dadurch kann ein Denkraum von anderen lernen, ohne deren lokalen Schutzraum zu öffnen.
+
+## 10. Pastoral-systemischer Schutzraum
+
+Der Denkraum braucht gestufte Sichtbarkeit:
+
+```text
+private → team → organization/community → shared commons
+```
+
+Eine höhere Sichtbarkeit muss bewusst hergestellt werden.
+
+Zwischen Gespräch und lokalem Langzeitwissen liegt ein **Capture Gate**. Zwischen lokalem Erfahrungswissen und gemeinsamem Praxismuster liegt ein eigenes **Sharing Gate**.
+
+Generalisierung ist mehr als Anonymisierung: Kontextbedingungen, Unsicherheit und epistemischer Status müssen erhalten bleiben.
+
+Der Denkraum soll außerdem systemisch statt personenbezogen erinnern. Er darf etwa eine ungelöste Spannung innerhalb eines Teams festhalten, ohne daraus dauerhafte Bewertungen einzelner Personen zu machen.
+
+Lokale Erinnerungen müssen einsehbar, korrigierbar und löschbar bleiben.
+
+## 11. Wissenschaft und Erfahrung als wechselseitige Korrektur
+
+Wissenschaftliches Wissen kann populäre oder modelltypische theologische Verkürzungen korrigieren. Eigene Praxiserfahrung kann umgekehrt auf Kontextbedingungen hinweisen, die in allgemeinen Forschungsbefunden nicht vollständig sichtbar sind.
+
+Der Denkraum soll diese Spannung nicht auflösen, sondern als Denkaufgabe sichtbar halten.
+
+Beispiel:
+
+> Forschung weist auf eine mögliche Teilnahmehürde hin.
+>
+> In mehreren lokalen Projekten wurde genau diese Form positiv angenommen.
+
+Die interessante Frage lautet dann:
+
+> Welche Kontextbedingungen erklären den Unterschied?
+
+## 12. Noch offene Fragen
 
 - Wie viel vom gemeinsamen Event Stream benötigt jede Perspektive wirklich?
 - Wann soll ein Agent auf andere Agenten reagieren dürfen und wann zunächst unabhängig beobachten?
 - Was gehört in den gemeinsamen Denkstand, was bleibt bewusst perspektivisch und privat?
-- Wie verhindert man, dass ein „shared memory“ früh einen Konsens erzwingt?
+- Wie verhindert man, dass ein Shared Memory früh einen Konsens erzwingt?
 - Wie werden Quellen und epistemischer Status in der UI sichtbar, ohne den Denkfluss zu überfrachten?
+- Wie genau funktioniert das Capture Gate für lokales Erfahrungswissen?
+- Welche Generalisierungen sind wirklich übertragbar und welche verlieren zu viel Kontext?
+- Welche Sharing-Stufen brauchen Person, Team, Gemeinde/Organisation und Commons?
+- Wie werden wissenschaftliche Knowledge Items reviewt und aktualisiert?
+- Wie kann ein Commons dezentral oder föderiert organisiert werden, ohne alle Denkräume technisch zu zentralisieren?
 - Welche Rolle übernimmt der Mensch: Moderator:in, Mitdenkende:r, Kurator:in, Entscheider:in – oder wechselnd alles davon?
 
-## 8. Nächste Hypothese
+## 13. Nächste Hypothese
 
-Bevor eine komplexe Agentenplattform gebaut wird, soll ein kleiner Prototyp prüfen, ob sich folgende Situation bereits produktiv anfühlt:
+Der erste Prototyp bleibt bewusst klein. Er muss noch nicht die vollständige Langzeitarchitektur implementieren.
 
-> Ein Mensch arbeitet an einem gemeinsamen Gottesdienst-Gegenstand. Drei klar unterscheidbare Perspektiven sehen denselben aktuellen Entwurf und einen kleinen gemeinsamen Denkstand. Sie können gezielt aufeinander Bezug nehmen. Keine Perspektive besitzt automatisch den gesamten Gesprächsverlauf. Der Mensch entscheidet, welche Spur vertieft oder in den gemeinsamen Denkstand übernommen wird.
+Er sollte aber von Anfang an keine Architekturentscheidungen treffen, die später folgende Trennungen unmöglich machen:
+
+- aktueller Denkprozess vs. Langzeitwissen,
+- wissenschaftliches Wissen vs. Erfahrungswissen,
+- lokales Erfahrungswissen vs. geteilte Praxismuster,
+- private/teambezogene Kontexte vs. Shared Commons.
+
+Die langfristige Vision lautet:
+
+> Ein theologischer Denkraum, der mit Menschen mitlernt, wissenschaftlich mitwächst, aus anderen Denkräumen lernen kann und zugleich persönliche sowie teambezogene Reflexion als geschützten Raum behandelt.
