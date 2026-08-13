@@ -1,337 +1,143 @@
-# Architekturhypothese: gemeinsamer und mitwachsender theologischer Denkraum
+# Architekturhypothese: theologischer Denkraum und Schwellenprozess
 
-Diese Datei beschreibt noch keine endgültige technische Architektur. Sie formuliert die kleinste Struktur, mit der mehrere KI-Perspektiven gemeinsam an einem Gegenstand arbeiten können und der Denkraum zugleich über viele Projekte hinweg lernen kann, ohne persönliche Erfahrung, wissenschaftliches Wissen und geteilte Praxismuster zu vermischen.
+Diese Datei beschreibt die aktuelle Kernarchitektur. Der primäre Gegenstand ist nicht mehr der Gottesdienstentwurf, sondern der **laufende theologische Denkprozess der Vorbereitenden**.
 
-## 1. Kernmodell des aktuellen Denkraums
+## 1. Kernmodell
 
 ```text
-                         ┌─────────────────────┐
-                         │       Mensch         │
-                         └──────────┬──────────┘
-                                    │
-                                    ▼
-                    ┌───────────────────────────┐
-                    │    conversational stream  │
-                    └─────────────┬─────────────┘
-                                  │
-             ┌────────────────────┼────────────────────┐
-             ▼                    ▼                    ▼
-       ┌────────────┐       ┌────────────┐       ┌────────────┐
-       │ Liturgie   │       │ Theologie  │       │ Außenblick │
-       │ perspective│       │ perspective│       │ perspective│
-       └──────┬─────┘       └──────┬─────┘       └──────┬─────┘
-              │                    │                    │
-              └────────────┬───────┴───────────┬────────┘
-                           ▼                   ▼
-                 ┌─────────────────┐   ┌──────────────────┐
-                 │ shared artifact │   │ structured state │
-                 └─────────────────┘   └──────────────────┘
+                    Mensch / Vorbereitungsteam
+                              │
+                              ▼
+                  conversational event stream
+                              │
+              ┌───────────────┼───────────────┐
+              ▼               ▼               ▼
+           Exegese         Theologie       Außenblick
+              │               │               │
+              └───────────────┼───────────────┘
+                              ▼
+                       thinking_state
+                              │
+                              ▼
+                       Threshold Review
+                              │
+                              ▼
+                       worship_artifact
 ```
+
+Der `thinking_state` hält den aktuellen theologischen Prozess fest:
+
+```yaml
+thinking_state:
+  theme: ...
+  context: ...
+  encounters: []
+  resonances: []
+  irritations: []
+  theological_tensions: []
+  emerging_testimonies: []
+  questions: []
+  unresolved: []
+```
+
+Ein liturgischer Entwurf ist nicht mehr der Ausgangspunkt, sondern ein späteres Artefakt.
+
+## 2. Context Builder
 
 Jede Perspektive erhält selektiv:
 
-1. den aktuellen gemeinsamen Gegenstand,
-2. einen kleinen strukturierten Denkstand,
-3. relevante Ereignisse aus dem Gespräch,
-4. ihre eigene Rollenbeschreibung und ggf. private Perspektivnotizen,
-5. gezielt ausgewähltes Langzeitwissen aus der Knowledge Ecology.
-
-Sie erhält **nicht automatisch den kompletten Chat, alle privaten Überlegungen anderer Agenten oder den gesamten Langzeitbestand**.
-
-## 2. Shared Artifact
-
-Der gemeinsame Gegenstand ist das, worüber gedacht wird. Beim ersten Prototyp kann das ein sehr einfaches Markdown-/JSON-Objekt sein.
-
-```yaml
-artifact:
-  type: worship-experiment
-  title: Noch offen
-  theme: Einsamkeit
-  context:
-    place: Stadtkirche
-    participants: offen / kirchlich unterschiedlich vertraut
-  working_question: >
-    Wie kann Einsamkeit wahrgenommen werden, ohne sie vorschnell religiös aufzulösen?
-  current_shape: []
-  unresolved_tensions:
-    - Nähe ermöglichen, ohne Intimität zu erzwingen
-    - christliche Hoffnung, ohne Erfahrung zu überreden
-```
-
-Der Artifact State ist **kein Chatprotokoll**, sondern der aktuell bearbeitbare Gegenstand.
-
-## 3. Shared Structured Memory
-
-Hier steht nicht alles, was gesagt wurde, sondern nur das, was für die weitere Arbeit als tragender Denkstand markiert wurde.
-
-```yaml
-shared_state:
-  observations:
-    - Einsamkeit ist nicht identisch mit Alleinsein.
-  tensions:
-    - Trost kann als vorschnelle Auflösung erfahren werden.
-  decisions:
-    - Noch keinen Ablauf entwerfen.
-  questions:
-    - Welche nichtsprachlichen Formen können Anwesenheit erfahrbar machen?
-  sources: []
-```
-
-Der Mensch sollte sehen und beeinflussen können, was hier aufgenommen wird.
-
-## 4. Conversational Event Stream
-
-Der Event Stream macht gemeinsame Arbeit möglich.
-
-```json
-{"type":"human_message","id":"e17","text":"Mir ist das zu stark auf Trost ausgerichtet."}
-{"type":"perspective_observation","id":"e18","agent":"liturgical","text":"Der bisherige Entwurf kennt noch keine Handlung, in der Einsamkeit körperlich oder räumlich vorkommt."}
-{"type":"perspective_reply","id":"e19","agent":"theological","replyTo":"e18","text":"Das könnte zugleich verhindern, dass Hoffnung nur als sprachliche Behauptung erscheint."}
-{"type":"state_promotion","id":"e20","source":"e19","target":"shared_state.tensions"}
-```
-
-Damit kann eine Perspektive auf einen Beitrag einer anderen reagieren. Der Kontext kann jedoch gezielt auf relevante Events begrenzt werden.
-
-## 5. Private Perspective Memory
-
-Eine Perspektive darf eine eigene Kontinuität besitzen.
-
-```yaml
-private_memory:
-  agent: liturgical
-  recurring_watchpoints:
-    - Körper und Raum nicht vergessen
-    - Stille nicht automatisch als positiv behandeln
-  hypotheses:
-    - Der Entwurf könnte mit räumlicher Distanz statt mit Sprache beginnen.
-```
-
-Diese Notizen werden nicht automatisch Teil des gemeinsamen Wahrheitsbestands.
-
-## 6. Kontext-Selektion
-
-Ein Context Builder stellt pro Agent gezielt zusammen:
-
 ```text
-SYSTEM ROLE
-+ CURRENT ARTIFACT
-+ SHARED STATE
-+ latest human event
-+ explicitly addressed events
-+ semantically relevant recent events
+ROLE
++ current thinking_state
++ relevant recent events
 + selected theological research knowledge
-+ selected practice patterns
-+ permitted local experience memory
-+ private perspective memory
++ selected perspective memory
++ permitted local experience context
 ```
 
-Der Context Builder ist zugleich eine Schutzgrenze: Nicht alles, was im System gespeichert ist, darf automatisch in jeden Agentenkontext gelangen.
+Nicht jede Perspektive benötigt den vollständigen Gesprächsverlauf.
 
-## 7. Turn-Modell für den ersten Prototyp
+## 3. Perspektiven
 
-1. Mensch äußert einen Gedanken oder verändert den Gegenstand.
-2. Companion entscheidet, welche 1–3 Perspektiven dafür relevant sind.
-3. Diese Perspektiven erhalten denselben Artifact State und Shared State.
-4. Perspektiven geben kurze Beobachtungen oder Fragen ab.
-5. Eine Perspektive darf auf einen konkreten Beitrag einer anderen reagieren.
-6. Mensch oder Companion entscheidet, was in den Shared State übernommen wird.
+Der Denkraum kann je nach Situation unter anderem einladen:
 
-Der MVP bleibt bewusst kontrolliert und wird nicht als autonomes Agentenkollektiv gebaut.
+- biblisch-exegetische Perspektive,
+- systematisch-theologische Perspektive,
+- praktisch-theologische Perspektive,
+- liturgische Perspektive,
+- ästhetische Perspektive,
+- Teilnehmenden- und Außenperspektive,
+- interreligiöse oder religionslose Gegenperspektive.
 
-## 8. Perspective Refresh
+Neu ist die **Threshold Perspective**. Sie prüft den Übergang vom Denkraum zum Gottesdienstraum.
 
-Ein gezieltes Ereignis kann eine Fremdperspektive anfordern:
+## 4. Threshold Review
 
-```json
-{
-  "type": "perspective_refresh_requested",
-  "reason": "Der Denkraum kreist seit mehreren Turns um Trost und individuelle Innerlichkeit.",
-  "search_for": [
-    "Ritual Studies",
-    "jüdische Klage- und Erinnerungspraxis",
-    "säkulare Einsamkeitsforschung"
-  ]
-}
-```
-
-Das Ergebnis sind wenige Perspektivkarten mit Provenienz, Beobachtung und Irritationsfrage – keine Materialhalde.
-
-## 9. Langzeitarchitektur: Knowledge Ecology
-
-Über dem einzelnen Denkraum liegt eine langfristige Wissensökologie:
+Der Übergang zum `worship_artifact` ist ein eigener Vorgang.
 
 ```text
-                 LONG-TERM KNOWLEDGE ECOLOGY
-
- ┌──────────────────────┐   ┌──────────────────────┐
- │ Theological Research │   │ Perspective Memory   │
- │ Knowledge            │   │                      │
- └──────────┬───────────┘   └──────────┬───────────┘
-            │                          │
-            ├──────────────┬───────────┤
-            │              │           │
-            ▼              ▼           ▼
-      Context Selection for current Thinking Space
-            ▲              ▲
-            │              │
- ┌──────────┴───────────┐  │  ┌────────────────────┐
- │ Local Experience     │  │  │ Practice Pattern   │
- │ Memory               │  │  │ Commons            │
- └──────────────────────┘  │  └────────────────────┘
-                           │
-                    shared with others
+thinking_state
+     ↓
+Was hat sich im Vorbereitungsteam verändert?
+     ↓
+Was davon ist verantwortbares Zeugnis?
+     ↓
+Wo wird eigene Erfahrung zur Erwartung an andere?
+     ↓
+Welche Deutungen und Erfahrungen müssen offen bleiben?
+     ↓
+worship_artifact
 ```
 
-Vier Wissensarten werden dauerhaft unterschieden:
+Die ausführliche Logik steht in `threshold-to-worship.md`.
 
-- **Theological Research Knowledge** – wissenschaftlich und quellengebunden.
-- **Local Experience Memory** – persönlich, teambezogen oder lokal; geschützt.
-- **Practice Pattern Commons** – generalisierte, geprüfte und freigegebene Praxiserfahrungen.
-- **Perspective Memory** – Fragen, Watchpoints, Irritationen und Selbstkorrekturen der Perspektiven.
+## 5. Wissensökologie
 
-## 10. Forschungsschleife
+Über dem einzelnen Denkprozess liegt die bestehende Knowledge Ecology:
 
 ```text
-current project
-   ↓
-what do we already know?
-   ↓
-knowledge gaps
-   ↓
-Research Worker
-   ↓
-source work / research
-   ↓
-Knowledge Candidates
-   ↓
-provenance + quality + freshness review
-   ↓
 Theological Research Knowledge
-```
-
-Der Research Worker erweitert den Bestand inkrementell. Vorhandenes Wissen wird wiederverwendet, aber auf Aktualität und Geltungsbereich geprüft.
-
-## 11. Erfahrungsschleife
-
-```text
-planning / practice / team process
-   ↓
-reflection
-   ↓
-Experience Reflection Worker
-   ↓
-local learning candidates
-   ↓
+Perspective Memory
 Local Experience Memory
-   ↓
-later confirmation / contradiction / revision
-```
-
-Erfahrungswissen bleibt zunächst lokal. Der Denkraum kann daraus für dieselbe Person oder dasselbe Team lernen, ohne dass diese Erfahrung geteilt werden muss.
-
-## 12. Lernen zwischen Denkräumen
-
-Andere Thinking Spaces dürfen nicht auf fremde Local Experience Memories zugreifen. Austausch erfolgt über kontrollierte Wissensartefakte:
-
-```text
-Thinking Space A                      Thinking Space B
-local protected memory                local protected memory
-        │                                    │
-        └──────── Generalization Gate ───────┘
-                         │
-                         ▼
-                  SHARED COMMONS
-             ┌──────────────────────┐
-             │ research knowledge   │
-             │ practice patterns    │
-             │ perspective cards    │
-             │ methods / sources    │
-             └──────────────────────┘
-```
-
-**Lernen von anderen bedeutet Austausch geprüfter Wissensartefakte, nicht Zugriff auf fremde Erinnerungen.**
-
-## 13. Sichtbarkeit und Schutzraum
-
-Für lokale Erinnerungen und Wissen gelten gestufte Sichtbarkeiten:
-
-```text
-private → team → organization/community → shared commons
-```
-
-Eine höhere Sichtbarkeit muss bewusst hergestellt werden. Es gibt keinen automatischen Pfad vom Gespräch zum Shared Commons.
-
-Der Schutzraum ist auch systemisch: Der Denkraum soll Spannungen und unterschiedliche Positionen eines Teams erinnern können, ohne daraus dauerhafte Bewertungen einzelner Personen zu erzeugen.
-
-## 14. Capture Gate und Sharing Gate
-
-Zwei getrennte Übergänge sind notwendig.
-
-### Capture Gate
-
-Entscheidet, ob etwas aus dem aktuellen Gespräch überhaupt dauerhaftes lokales Erfahrungswissen werden soll.
-
-```text
-Conversation → candidate → purpose/protection review → Local Experience Memory
-```
-
-### Sharing Gate
-
-Entscheidet, ob aus lokalem Erfahrungswissen ein generalisiertes, teilbares Praxismuster werden kann.
-
-```text
-Local Experience Memory
-   ↓
-Generalization
-   ↓
-Context / privacy / epistemic review
-   ↓
-Explicit approval
-   ↓
 Practice Pattern Commons
+              │
+              ▼
+       Context Selection
+              │
+              ▼
+       aktueller Denkraum
 ```
 
-Generalisierung ist mehr als das Entfernen von Namen. Kontext, Unsicherheit und epistemischer Status müssen erhalten bleiben.
+Research Knowledge und geteilte Praxismuster können aus anderen Denkräumen stammen. Lokale Erinnerung bleibt davon getrennt.
 
-## 15. Epistemische Trennung
+## 6. Neue Lernschleife
 
-Wissenschaftliches Wissen und Praxiserfahrung dürfen sich gegenseitig korrigieren, aber nicht vermischt werden.
-
-Der Denkraum soll beispielsweise gleichzeitig sagen können:
-
-> „Die Forschung weist auf eine mögliche Hürde hin.“
-
-und:
-
-> „In unseren bisherigen lokalen Erfahrungen zeigte sich das teilweise anders.“
-
-Die daraus entstehende Spannung ist eine Denkaufgabe und kein Fehler, der durch einen künstlichen Konsens beseitigt werden muss.
-
-## 16. Selbstkorrektur des lernenden Systems
-
-Langzeitwissen erzeugt eigene Defaults. Deshalb müssen Learnings revidierbar bleiben:
-
-```yaml
-learning:
-  statement: ...
-  evidence_for: 7
-  evidence_against: 2
-  confidence: medium
-  status: provisional
-  scope: ...
-  last_confirmed: ...
+```text
+thinking process
+   ↓
+threshold
+   ↓
+worship artifact
+   ↓
+worship event
+   ↓
+reception / reflection
+   ↓
+learning candidates
+   ↓
+local experience + generalizable patterns
 ```
 
-Der Reviewer soll mit der Zeit nicht nur Modell-Bias, sondern auch **Bias des eigenen Thinking Space** erkennen:
+Damit kann das System langfristig nicht nur Formen vergleichen, sondern auch die Differenz zwischen eigener Vorbereitungserfahrung, intendierter Gestaltung und tatsächlicher Rezeption reflektieren.
 
-> Welche Denkgewohnheiten haben wir selbst entwickelt?
+## 7. Architekturregeln
 
-## 17. Architekturregeln
+> Der primäre Zustand ist ein Denkprozess, kein Entwurf.
 
-> Konsens ist ein mögliches Ergebnis des Denkens, aber kein Infrastrukturzustand.
+> Der Gottesdienst ist ein neuer Ereignisraum und keine Kopie des Vorbereitungserlebnisses.
 
-> Lernen bedeutet nicht, alles zu speichern, sondern Wissen nach Herkunft, Geltungsbereich, Schutzbedarf und Revidierbarkeit zu unterscheiden.
+> Konsens ist ein mögliches Ergebnis, aber kein Infrastrukturzustand.
 
-> Lernen von anderen bedeutet Austausch geprüfter Wissensartefakte – nicht Öffnung fremder Schutzräume.
+> Langzeitwissen wird nach Herkunft, Geltungsbereich und Revidierbarkeit unterschieden.
 
-> Der Denkraum soll sich erinnern können, ohne Menschen festzuschreiben.
+> Lernen zwischen Denkräumen geschieht über geprüfte Wissensartefakte, nicht über die Öffnung lokaler Erinnerungsbestände.
