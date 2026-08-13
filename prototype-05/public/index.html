@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Theological Thinking Space – Prototype 05</title>
+<link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+<main class="shell">
+<header class="topbar">
+<div><p class="eyebrow">THEOLOGICAL THINKING SPACE · PROTOTYPE 05</p><h1>Denkraum</h1>
+<p class="subtitle">Nicht jede Pause braucht einen neuen Gedanken.</p></div>
+<div class="status"><span>deepseek-v4-flash</span><span id="modeBadge">DENKRAUM</span></div>
+</header>
+<section id="startPanel" class="card start-card">
+<p class="eyebrow">AUSGANGSPUNKT</p><h2>Was bringt dich oder euch heute in den Denkraum?</h2>
+<textarea id="startInput" rows="5" placeholder="Mich beschäftigt …"></textarea>
+<div class="right"><button id="startBtn">Denkraum öffnen</button></div>
+</section>
+<section id="thinkingView" class="workspace hidden">
+<section class="card conversation">
+<div class="section-head"><div><p class="eyebrow">GESPRÄCH</p><h2>Am Denktisch</h2></div><button class="ghost" id="resetBtn">Session zurücksetzen</button></div>
+<div id="stream" class="stream"></div>
+<div id="suggestionBox" class="suggestion hidden"></div>
+<div class="composer">
+<textarea id="messageInput" rows="3" placeholder="Du kannst auch einfach „hmmm“, „weiß nicht“ oder „ja vielleicht“ schreiben …"></textarea>
+<div class="composer-row"><button class="ghost" id="perspectiveToggle">Perspektive hinzuholen +</button><button id="sendBtn">Senden</button></div>
+</div>
+<div id="perspectivePicker" class="perspective-picker hidden">
+<button data-role="bible"><strong>Bibel / Theologie</strong><span>Text, Gottesbild, Spannung</span></button>
+<button data-role="liturgy"><strong>Liturgie / Praxis</strong><span>Leib, Raum, Ritual, Teilhabe</span></button>
+<button data-role="outside"><strong>Außenblick</strong><span>Voraussetzungen, Fremdheit, Kontrast</span></button>
+</div>
+<details class="debug"><summary>Gesprächsregie anzeigen</summary><div id="directorBox"></div></details>
+</section>
+<aside class="card state-card">
+<div class="section-head"><div><p class="eyebrow">DENKSTAND</p><h2>Was trägt bisher?</h2></div><span id="readiness" class="readiness">noch im Prozess</span></div>
+<div id="stateGroups"></div>
+<div id="candidateArea" class="candidates hidden"><h3>Vorschläge zum Festhalten</h3><div id="candidateList"></div></div>
+<button id="thresholdBtn" class="threshold-button muted-threshold">Zur Schwelle →</button>
+</aside>
+</section>
+<section id="thresholdView" class="card threshold hidden">
+<p class="eyebrow">SCHWELLE</p><h2>Was darf aus unserem Denkweg nach außen treten?</h2>
+<div id="thresholdSummary" class="threshold-summary"></div>
+<div class="threshold-grid">
+<label><span>Was hat sich bei uns im Denken verändert?</span><textarea id="changedInput" rows="5"></textarea></label>
+<label><span>Was können wir als eigenes Zeugnis verantworten?</span><textarea id="testimonyInput" rows="5"></textarea></label>
+<label><span>Was dürfen wir für andere nicht vorwegnehmen?</span><textarea id="openInput" rows="5"></textarea></label>
+<label><span>Welche Bedingungen könnten einen offenen Erfahrungsraum ermöglichen?</span><textarea id="conditionsInput" rows="5"></textarea></label>
+</div>
+<div class="threshold-actions"><button class="ghost" id="backBtn">← Zurück</button><button id="snapshotBtn">Schwellenstand anzeigen</button></div>
+<pre id="snapshot" class="snapshot hidden"></pre>
+</section>
+<div id="loading" class="loading hidden">Der Denkraum antwortet …</div>
+<div id="errorBox" class="error hidden"></div>
+</main><script src="./app.js"></script>
+</body></html>
